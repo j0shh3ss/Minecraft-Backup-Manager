@@ -1,121 +1,164 @@
-# Server-Backup-Scripts
+# 🧱 Minecraft Backup Manager
 
-Simple, automated backup scripts designed for Minecraft servers using `tmux` and `cron`.
+A simple, automated backup + restore system for Minecraft servers using `tmux` and `cron`.
 
-These scripts create **hourly, daily, and weekly backups** with automatic cleanup to manage disk usage.
+Designed to be:
+
+* ⚡ Easy to install
+* 🔒 Safe for live servers
+* 🧠 Minimal and reliable
+
+---
+
+## ✨ Features
+
+* ⏱️ **Automated hourly, daily, and weekly backups**
+* 🔄 **Full restore support** (recover your server instantly)
+* 🧰 **Interactive installer** (no manual config needed)
+* 🧹 **Automatic cleanup** (prevents disk overflow)
+* 📦 **ZSTD compression** (fast and efficient)
+* 🗑️ **Uninstall script included**
+* ⚙️ **Optional cron setup**
+
+---
+
+## 📦 Installation
+
+### 1. Download
+
+Click:
+**Code → Download ZIP**
+
+Or clone:
+
+```bash
+git clone https://github.com/j0shh3ss/Minecraft-Backup-Manager.git
+cd Minecraft-Backup-Manager
+```
+
+---
+
+### 2. Run Installer
+
+```bash
+chmod +x install.sh
+./install.sh
+```
+
+The installer will:
+
+* Ask for your server location
+* Configure all scripts automatically
+* Optionally install cron jobs
+* Optionally run a test backup
+
+---
+
+## 🧪 Manual Backup
+
+Run anytime:
+
+```bash
+./hourly_backup.sh
+```
+
+---
+
+## 🔄 Restore a Backup
+
+```bash
+./restore.sh <backup_file.tar.zst>
+```
+
+Example:
+
+```bash
+./restore.sh world_hourly-2026-04-14_15.tar.zst
+```
+
+### What this does:
+
+* Pauses world saving safely
+* Replaces your server files with the backup
+* Restarts saving
+
+⚠️ **This will overwrite your current server files**
+
+---
+
+## ⏱️ Cron Jobs
+
+If enabled, the installer schedules:
+
+* Hourly → every hour
+* Daily → 3:15 AM
+* Weekly → Monday 3:30 AM
+
+Edit anytime with:
+
+```bash
+crontab -e
+```
+
+---
+
+## 📁 Folder Structure
+
+```bash
+backups/
+├── hourly/
+├── daily/
+├── weekly/
+└── logs/
+```
+
+---
+
+## 🧹 Uninstall
+
+```bash
+chmod +x uninstall.sh
+./uninstall.sh
+```
+
+Options:
+
+* Remove cron jobs
+* Delete backups
+* Remove logs
 
 ---
 
 ## ⚙️ Requirements
 
-These scripts assume:
-
-* You are running your server inside a **tmux session**
-* You can schedule jobs using **crontab**
-* You have enough disk space for backups
-
-  * Example: a 7GB world ≈ ~245GB with full retention
-
-Dependencies:
-
+* Linux system
 * `tmux`
 * `tar`
 * `zstd`
+* `cron`
 
----
-
-## 📦 What It Does
-
-* **Hourly script**
-
-  * Saves the world safely (`save-off`)
-  * Copies files to a temp directory
-  * Compresses using `zstd`
-  * Cleans up old hourly backups (~25 hours by default)
-
-* **Daily script**
-
-  * Copies the latest hourly backup
-  * Keeps 7 days of backups
-
-* **Weekly script**
-
-  * Copies the latest hourly backup
-  * Keeps 4 weeks of backups
-
----
-
-## 🛠️ Setup
-
-### 1. Edit Variables
-
-You **must** update these values in `hourly_backup.sh`:
-
-* `SESSION` → your tmux session name
-* `MC_DIR` → your server directory
-* `BACKUP_DIR` → where backups are stored
-
-⚠️ Important:
-
-* Do NOT include a trailing slash in `MC_DIR`
-* Make sure all directories exist or can be created
-
----
-
-### 2. Schedule with Cron
-
-Example:
-* Note: I put my scripts under SUDO but this does not follow least privlege.
-
-edit crontab and add scripts at the end of the file with
-sudo crontab -e
-
-```bash
-# Hourly backup
-0 * * * * /path/to/hourly_backup.sh
-
-# Daily backup
-15 3 * * * /path/to/daily_backup.sh
-
-# Weekly backup
-30 3 * * 1 /path/to/weekly_backup.sh
-```
-
-This example schedules:
-- Hourly backups at the start of every hour
-- Daily backups at 3:15 AM
-- Weekly backups every Monday at 3:30 AM
-
-Cron format:
-1 2 3 4 5
-* * * * *
-
-1: Day of week (0-7, Sunday = 0 or 7)
-2: Month
-3: Day of month
-4: Hour
-5: Minute
+Installer will attempt to install missing dependencies.
 
 ---
 
 ## 🧠 Notes
 
-* Backups are compressed using `zstd` for speed and efficiency
-* A temporary directory is used to prevent corruption during copy
-* The script automatically re-enables saving if something fails
+* Designed for servers running inside **tmux**
+* Uses `save-off` to prevent world corruption
+* Backups can use significant disk space depending on retention
 
 ---
 
-## ⚠️ Disclaimer
+## ❗ Disclaimer
 
-* These scripts are provided as-is
-* Test them before relying on them in production
-* Make sure your backups are actually restorable
+* Provided as-is
+* Test before using in production
+* Always verify backups can be restored
 
 ---
 
-## 👍 Why I Made This
+## 👍 Why This Exists
 
-I wanted a **simple, reliable backup system** for my Minecraft server without needing complex tools or plugins.
+I wanted a **simple, reliable backup + restore system** for my Minecraft server without plugins or complex tools.
 
-Feel free to modify and use it for your own setup.
+If it helps you too, feel free to use or modify it.
