@@ -87,13 +87,14 @@ This example schedules:
 - Weekly backups every Monday at 3:30 AM
 
 Cron format:
+1 2 3 4 5
 * * * * *
-│ │ │ │ │
-│ │ │ │ └── Day of week (0-7, Sunday = 0 or 7)
-│ │ │ └──── Month
-│ │ └────── Day of month
-│ └──────── Hour
-└────────── Minute
+
+1: Day of week (0-7, Sunday = 0 or 7)
+2: Month
+3: Day of month
+4: Hour
+5: Minute
 
 ---
 
