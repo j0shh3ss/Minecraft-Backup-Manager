@@ -33,6 +33,16 @@ echo ""
 
 # ---- VALIDATION ----
 
+if [[ "$MC_DIR" != /* ]]; then
+    echo "❌ ERROR: Server directory must be an absolute path (start with /)"
+    exit 1
+fi
+
+if [[ "$BACKUP_BASE" != /* ]]; then
+    echo "❌ ERROR: Backup directory must be an absolute path (start with /)"
+    exit 1
+fi
+
 if [ ! -d "$MC_DIR" ]; then
     echo "❌ ERROR: Server directory does not exist"
     exit 1

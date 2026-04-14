@@ -48,13 +48,13 @@ If you don’t have git installed, you can checkout the latest release directly:
 # Download
 
 ```bash
-wget https://github.com/j0shh3ss/Minecraft-Backup-Manager/archive/refs/tags/v1.0.tar.gz
+wget https://github.com/j0shh3ss/Minecraft-Backup-Manager/archive/refs/tags/v1.0.1.tar.gz
 ```
 
 # Extract
 ```bash
-tar -xzf v1.0.tar.gz
-cd Minecraft-Backup-Manager-1.0
+tar -xzf v1.0.1.tar.gz
+cd Minecraft-Backup-Manager-1.0.1
 cd scripts
 ```
 Then run:
@@ -74,7 +74,7 @@ chmod +x install.sh
 
 The installer will:
 
-* Ask for your server location
+* Ask for your server location - All paths must be absolute (e.g. starts with "/" /mnt/server/minecraft, not home/user/...)
 * Configure all scripts automatically
 * Optionally install cron jobs
 * Optionally run a test backup
@@ -86,7 +86,7 @@ The installer will:
 Run anytime:
 
 ```bash
-cd /Minecraft-Backup-Manager-1.0
+cd /Minecraft-Backup-Manager-1.0.1
 cd scripts
 ./hourly_backup.sh
 ```
@@ -97,7 +97,7 @@ cd scripts
 First time running (To set permissions)
 
 ```bash
-cd /Minecraft-Backup-Manager-1.0
+cd /Minecraft-Backup-Manager-1.0.1
 cd scripts
 chmod +x restore.sh
 ./restore.sh
@@ -106,7 +106,7 @@ chmod +x restore.sh
 Example usage:
 
 ```bash
-cd /Minecraft-Backup-Manager-1.0
+cd /Minecraft-Backup-Manager-1.0.1
 cd scripts
 ./restore.sh
 Tmux session name [Minecraft]: World
