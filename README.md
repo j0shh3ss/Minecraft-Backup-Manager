@@ -94,6 +94,7 @@ cd scripts
 ---
 
 ## 🔄 Restore a Backup
+First time running (To set permissions)
 
 ```bash
 cd /Minecraft-Backup-Manager-1.0
@@ -102,12 +103,11 @@ chmod +x restore.sh
 ./restore.sh
 ```
 
-Example:
+Example usage:
 
 ```bash
 cd /Minecraft-Backup-Manager-1.0
 cd scripts
-chmod +x restore.sh
 ./restore.sh
 Tmux session name [Minecraft]: World
 Minecraft server root directory (contains world/, versions/, config/, etc.): [/mnt/server/minecraft]: /mnt/server/minecraft
