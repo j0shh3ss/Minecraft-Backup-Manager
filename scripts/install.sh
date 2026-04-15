@@ -10,6 +10,8 @@ echo "==== Minecraft Backup Script Installer ===="
 read -p "Tmux session name [Minecraft]: " SESSION
 SESSION=${SESSION:-Minecraft}
 
+echo "Current directory is: $(pwd)"
+
 read -p "Path to your server root folder (Where /world, /plugins, /config, etc. are located) [/mnt/server/minecraft]: " MC_DIR
 MC_DIR=${MC_DIR:-/mnt/server/minecraft}
 

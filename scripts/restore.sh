@@ -18,6 +18,8 @@ echo "==== Minecraft Backup Restore ===="
 read -p "Tmux session name [Minecraft]: " SESSION
 SESSION=${SESSION:-Minecraft}
 
+echo "Current directory is: $(pwd)"
+
 read -p "Minecraft server root directory (contains world/, versions/, config/, etc.): [/mnt/server/minecraft]: " SERVER_DIR
 SERVER_DIR=${SERVER_DIR:-/mnt/server/minecraft}
 
