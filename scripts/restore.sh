@@ -38,7 +38,7 @@ if [[ "$SERVER_DIR" == "/" || -z "$SERVER_DIR" ]]; then
 fi
 
 if [ ! -d "$SERVER_DIR/world" ]; then
-    echo "❌ ERROR: '$SERVER_DIR' does not contain a world/ directory"
+    echo "❌ ERROR: '$SERVER_DIR' does not contain a /world directory"
     echo "You likely entered the wrong directory."
     exit 1
 fi
