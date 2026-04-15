@@ -1,7 +1,15 @@
 #!/bin/bash
 
 set -euo pipefail
+CONFIG="$SCRIPT_DIR/backup.conf"
 
+if [ ! -f "$CONFIG" ]; then
+    echo "❌ Missing config file: $CONFIG"
+    echo "Run install.sh first."
+    exit 1
+fi
+
+source "$CONFIG"
 echo "==== Minecraft Backup Restore ===="
 
 # ---- USER INPUT ----
@@ -49,6 +57,10 @@ mkdir -p "$TMP_DIR"
 echo "Using temp directory: $TMP_DIR"
 
 # ---- STOP SAVING ----
+tmux has-session -t "$SESSION" 2>/dev/null || {
+    echo "❌ tmux session '$SESSION' not found"
+    exit 1
+}
 
 tmux send-keys -t "$SESSION" "say Server restore starting..." Enter || true
 sleep 3

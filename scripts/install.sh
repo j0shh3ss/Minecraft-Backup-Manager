@@ -2,6 +2,19 @@
 
 set -euo pipefail
 
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+CONFIG_FILE="$SCRIPT_DIR/backup.conf"
+
+CONFIG="$SCRIPT_DIR/backup.conf"
+
+if [ ! -f "$CONFIG" ]; then
+    echo "❌ Missing config file: $CONFIG"
+    echo "Run install.sh first."
+    exit 1
+fi
+
+source "$CONFIG"
+
 echo "==== Minecraft Backup Script Installer ===="
 
 # ---- USER INPUT ----
@@ -21,7 +34,6 @@ DAILY_DIR="$BACKUP_BASE/daily"
 WEEKLY_DIR="$BACKUP_BASE/weekly"
 LOG_DIR="$BACKUP_BASE/logs"
 
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 echo ""
 echo "Using configuration:"
@@ -53,6 +65,21 @@ fi
 echo "Creating directories..."
 mkdir -p "$HOURLY_DIR" "$DAILY_DIR" "$WEEKLY_DIR" "$LOG_DIR"
 
+
+# ---- CREATE CONFIG FILE ----
+
+cat > "$CONFIG_FILE" <<EOF
+SESSION="$SESSION"
+MC_DIR="$MC_DIR"
+BACKUP_BASE="$BACKUP_BASE"
+HOURLY_DIR="$HOURLY_DIR"
+DAILY_DIR="$DAILY_DIR"
+WEEKLY_DIR="$WEEKLY_DIR"
+LOG_DIR="$LOG_DIR"
+EOF
+
+echo "✅ Config created at $CONFIG_FILE"
+
 # ---- DEPENDENCIES ----
 
 echo "Checking dependencies..."
@@ -72,26 +99,6 @@ if ! command -v tar &>/dev/null; then
     sudo apt install tar -y
 fi
 
-# ---- UPDATE SCRIPTS ----
-
-echo "Configuring scripts..."
-
-# Hourly
-sed -i "s|^SESSION=.*|SESSION=\"$SESSION\"|" "$SCRIPT_DIR/hourly_backup.sh"
-sed -i "s|^MC_DIR=.*|MC_DIR=\"$MC_DIR\"|" "$SCRIPT_DIR/hourly_backup.sh"
-sed -i "s|^BACKUP_DIR=.*|BACKUP_DIR=\"$HOURLY_DIR\"|" "$SCRIPT_DIR/hourly_backup.sh"
-
-
-# Daily
-sed -i "s|^SOURCE_DIR=.*|SOURCE_DIR=\"$HOURLY_DIR\"|" "$SCRIPT_DIR/daily_backup.sh"
-sed -i "s|^DEST_DIR=.*|DEST_DIR=\"$DAILY_DIR\"|" "$SCRIPT_DIR/daily_backup.sh"
-sed -i "s|^LOG_DIR=.*|LOG_DIR=\"$LOG_DIR\"|" "$SCRIPT_DIR/daily_backup.sh"
-
-# Weekly
-sed -i "s|^SOURCE_DIR=.*|SOURCE_DIR=\"$DAILY_DIR\"|" "$SCRIPT_DIR/weekly_backup.sh"
-sed -i "s|^DEST_DIR=.*|DEST_DIR=\"$WEEKLY_DIR\"|" "$SCRIPT_DIR/weekly_backup.sh"
-sed -i "s|^LOG_DIR=.*|LOG_DIR=\"$LOG_DIR\"|" "$SCRIPT_DIR/weekly_backup.sh"
-
 # ---- PERMISSIONS ----
 
 chmod +x hourly_backup.sh daily_backup.sh weekly_backup.sh
@@ -104,7 +111,6 @@ INSTALL_CRON=${INSTALL_CRON:-y}
 if [[ "$INSTALL_CRON" =~ ^[Yy]$ ]]; then
     echo "Setting up cron jobs..."
 
-    SCRIPT_DIR=$(pwd)
     TMP_CRON=$(mktemp)
 
     crontab -l 2>/dev/null | grep -v "hourly_backup.sh" | grep -v "daily_backup.sh" | grep -v "weekly_backup.sh" > "$TMP_CRON"

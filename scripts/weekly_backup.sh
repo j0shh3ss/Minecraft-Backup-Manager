@@ -3,9 +3,15 @@
 
 set -euo pipefail
 
-SOURCE_DIR="/mnt/server/minecraft/backups/daily"
-DEST_DIR="/mnt/server/minecraft/backups/weekly"
-LOG_DIR="/mnt/server/minecraft/backups/logs"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+CONFIG="$SCRIPT_DIR/backup.conf"
+
+if [ ! -f "$CONFIG" ]; then
+    echo "❌ Missing config file: $CONFIG"
+    echo "Run install.sh first."
+    exit 1
+fi
+source "$CONFIG"
 
 # Ensure destination exists
 mkdir -p "$DEST_DIR" "$LOG_DIR"
@@ -27,4 +33,4 @@ cp "$LATEST_BACKUP" "$DEST_DIR/world_weekly_$TIMESTAMP.tar.zst"
 find "$DEST_DIR" -type f -name "*.tar.zst" -mtime +28 -exec rm {} \;
 
 # Optional log
-echo "$(date): Weekly backup completed." >> "$LOG_DIR/backup_weekly.log"
+echo "[$(date -Iseconds)] Weekly backup completed" >> "$LOG_DIR/backup_weekly.log"

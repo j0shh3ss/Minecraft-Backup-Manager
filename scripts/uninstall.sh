@@ -3,8 +3,16 @@
 set -euo pipefail
 
 echo "==== Minecraft Backup Script Uninstaller ===="
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+CONFIG="$SCRIPT_DIR/backup.conf"
 
-SCRIPT_DIR=$(pwd)
+if [ ! -f "$CONFIG" ]; then
+    echo "❌ Missing config file: $CONFIG"
+    echo "Run install.sh first."
+    exit 1
+fi
+
+source "$CONFIG"
 
 # ---- REMOVE CRON JOBS ----
 
