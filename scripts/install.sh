@@ -91,6 +91,11 @@ if ! command -v tar &>/dev/null; then
     sudo apt install tar -y
 fi
 
+if ! command -v rsync &>/dev/null; then
+    echo "Installing rsync..."
+    sudo apt install rsync -y
+fi
+
 # ---- PERMISSIONS ----
 
 chmod +x hourly_backup.sh daily_backup.sh weekly_backup.sh

@@ -40,7 +40,7 @@ sleep 5
 
 #copy
 
-cp -a "$MC_DIR/." "$TMP_DIR/"
+rsync -a --delete "$MC_DIR/" "$TMP_DIR/"
 
 tmux send-keys -t "$SESSION" "save-on" Enter || true
 sleep 5
