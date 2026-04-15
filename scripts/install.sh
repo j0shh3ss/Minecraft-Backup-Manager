@@ -2,18 +2,6 @@
 
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-CONFIG_FILE="$SCRIPT_DIR/backup.conf"
-
-CONFIG="$SCRIPT_DIR/backup.conf"
-
-if [ ! -f "$CONFIG" ]; then
-    echo "❌ Missing config file: $CONFIG"
-    echo "Run install.sh first."
-    exit 1
-fi
-
-source "$CONFIG"
 
 echo "==== Minecraft Backup Script Installer ===="
 
@@ -34,6 +22,8 @@ DAILY_DIR="$BACKUP_BASE/daily"
 WEEKLY_DIR="$BACKUP_BASE/weekly"
 LOG_DIR="$BACKUP_BASE/logs"
 
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+CONFIG_FILE="$SCRIPT_DIR/backup.conf"
 
 echo ""
 echo "Using configuration:"
