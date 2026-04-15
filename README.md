@@ -1,7 +1,7 @@
 # 🧱 Minecraft Backup Manager
 
 Why I made this:
-As a kid I loved seeing the updating message and the peace of mind knowing my game just backed up. I could die or burn my house down and all I had to do was turn the xbox off. Loved it. I created this one to replicate that in that same minecraft world, but now runs in on a java server. The world is from 2012 so I needed ways to safe guard it.
+As a kid I loved seeing the saving message and the peace of mind knowing my game just backed up. I could die or burn my house down and all I had to do was turn the xbox off. Loved it. I created this one to replicate that in that same minecraft world, but now runs in on a java server. The world is from 2012 so I needed ways to safe guard it.
 
 What it does:
 A simple, automated backup + restore system for Minecraft servers using `tmux` and `cron`.
