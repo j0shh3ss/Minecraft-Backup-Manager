@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -euo pipefail
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 CONFIG="$SCRIPT_DIR/backup.conf"
 
 if [ ! -f "$CONFIG" ]; then
